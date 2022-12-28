@@ -27,18 +27,17 @@
 
         let leftLetters = word.length;
         let chances = word.length * 2;
-        console.log(word)
-        while(leftLetters > 0 && chances > 0) {
-            alert(answerArray.join(" ") + " Es fehlen noch " + leftLetters + " Buchstaben und du hast noch " + chances + " Versuche.");
 
+        while(leftLetters > 0 && chances > 0) {
+            alert(answerArray.join(" ") + " Es fehlen noch " + leftLetters + " Buchstaben und du hast noch " + chances + " Versuche."); 
             let guessing = prompt("Rate einen Buchstaben oder klicke auf abbrechen um das Spiel zu beenden.").toLowerCase();
+
             if(guessing === null) {
                 break;
             } else if(guessing.length !== 1) {
                 alert("Gib bitte einen einzelnen Buchstaben ein.");
             } else {
                 for(let j = 0; j < word.length; j++){
-
                     if(word[j] === guessing && answerArray[j] === "_"){
                         answerArray[j] = guessing;
                         leftLetters--;
@@ -46,11 +45,13 @@
                 }
             }
             chances--;
-            console.log(chances)
         }
 
-        alert(answerArray.join(" "));
-        alert("Gut gemacht! Die Antwort lautet " + answerArray.join("").toUpperCase());
+        if(word === answerArray.join("")){
+            alert("Gut gemacht! Die Antwort lautet " + answerArray.join("").toUpperCase());
+        } else {
+            alert("Schade! Das Wort lautet " + word);
+        }
     </script>
 </body>
 </html>
