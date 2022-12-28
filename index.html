@@ -8,6 +8,46 @@
 </head>
 <body>
     <h1>Hangman</h1>
-    
+    <script>
+        let words = [
+            "uhr",
+            "moon",
+            "honnet",
+            "yakomoz",
+            "masterpiece",
+            "blubberwasser"
+        ];
+
+        let word = words[Math.floor(Math.random()* words.length)];
+
+        let answerArray = [];
+        for(let i = 0; i < word.length; i++){
+            answerArray[i] = "_";
+        }
+
+        let leftLetters = word.length;
+
+        while(leftLetters > 0) {
+            alert(answerArray.join(" ") + " Es fehlen noch " + leftLetters + " Buchstaben.");
+
+            let guessing = prompt("Rate einen Buchstaben oder klicke auf abbrechen um das Spiel zu beenden.").toLowerCase();
+            if(guessing === null) {
+                break;
+            } else if(guessing.length !== 1) {
+                alert("Gib bitte einen einzelnen Buchstaben ein.");
+            } else {
+                for(let j = 0; j < word.length; j++){
+                    if(word[j] === guessing){
+                        answerArray[j] = guessing;
+                        leftLetters--;
+                    }
+                }
+            }
+            
+        }
+
+        alert(answerArray.join(" "));
+        alert("Gut gemacht! Die Antwort lautet " + answerArray.join("").toUpperCase());
+    </script>
 </body>
 </html>
