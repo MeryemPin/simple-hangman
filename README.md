@@ -1,2 +1,2 @@
 # simple-hangman
-Can guess the word?
+Can you guess the word?
