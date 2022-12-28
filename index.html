@@ -26,9 +26,10 @@
         }
 
         let leftLetters = word.length;
+        let chances = word.length * 2;
 
-        while(leftLetters > 0) {
-            alert(answerArray.join(" ") + " Es fehlen noch " + leftLetters + " Buchstaben.");
+        while(leftLetters > 0 && chances > 0) {
+            alert(answerArray.join(" ") + " Es fehlen noch " + leftLetters + " Buchstaben und du hast noch " + chances + " Versuche.");
 
             let guessing = prompt("Rate einen Buchstaben oder klicke auf abbrechen um das Spiel zu beenden.").toLowerCase();
             if(guessing === null) {
@@ -43,7 +44,8 @@
                     }
                 }
             }
-            
+            chances--;
+            console.log(chances)
         }
 
         alert(answerArray.join(" "));
