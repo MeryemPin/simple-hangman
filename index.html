@@ -27,7 +27,7 @@
 
         let leftLetters = word.length;
         let chances = word.length * 2;
-
+        console.log(word)
         while(leftLetters > 0 && chances > 0) {
             alert(answerArray.join(" ") + " Es fehlen noch " + leftLetters + " Buchstaben und du hast noch " + chances + " Versuche.");
 
@@ -38,7 +38,8 @@
                 alert("Gib bitte einen einzelnen Buchstaben ein.");
             } else {
                 for(let j = 0; j < word.length; j++){
-                    if(word[j] === guessing){
+
+                    if(word[j] === guessing && answerArray[j] === "_"){
                         answerArray[j] = guessing;
                         leftLetters--;
                     }
