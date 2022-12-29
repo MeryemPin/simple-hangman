@@ -1,57 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Simple Hangman</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Hangman</h1>
     <script>
+      // Ein zufälliges Wort zurückgeben
+      let pickWord = function () {
         let words = [
-            "uhr",
-            "moon",
-            "honnet",
-            "yakomoz",
-            "masterpiece",
-            "blubberwasser"
+          "uhr",
+          "moon",
+          "honnet",
+          "yakamoz",
+          "masterpiece",
+          "blubberwasser",
         ];
+        return words[Math.floor(Math.random() * words.length)];
+      };
 
-        let word = words[Math.floor(Math.random()* words.length)];
-
+      // Das Antwort-Array zurückgeben
+      let setupAnswerArray = function (word) {
         let answerArray = [];
-        for(let i = 0; i < word.length; i++){
-            answerArray[i] = "_";
+        for (let i = 0; i < word.length; i++) {
+          answerArray[i] = "_";
         }
+        return answerArray;
+      };
 
-        let leftLetters = word.length;
-        let chances = word.length * 2;
+      // Spielstand mit Alert anzeigen
+      let showProgress = function (answerArray) {
+        alert(answerArray.join(" "));
+      };
 
-        while(leftLetters > 0 && chances > 0) {
-            alert(answerArray.join(" ") + " Es fehlen noch " + leftLetters + " Buchstaben und du hast noch " + chances + " Versuche."); 
-            let guessing = prompt("Rate einen Buchstaben oder klicke auf abbrechen um das Spiel zu beenden.").toLowerCase();
+      // Rateversuch mit Prompt anfordern
+      let takeGuess = function () {
+        return prompt(
+          "Rate einen Buchstaben oder klicke auf abbrechen um das Spiel zu beenden."
+        ).toLowerCase();
+      };
 
-            if(guessing === null) {
-                break;
-            } else if(guessing.length !== 1) {
-                alert("Gib bitte einen einzelnen Buchstaben ein.");
-            } else {
-                for(let j = 0; j < word.length; j++){
-                    if(word[j] === guessing && answerArray[j] === "_"){
-                        answerArray[j] = guessing;
-                        leftLetters--;
-                    }
-                }
-            }
-            chances--;
+      // Antowrt-Array aktualisieren und anzeigen, wie oft der Tipp im Wort vorkommt, sodass die verbleibenden Buchstaben aktualisiert werden
+      function updateGame(guess, word, answerArray) {
+        let appearances = 0;
+        for (let j = 0; j < word.length; j++) {
+          if (word[j] === guess && answerArray[j] === "_") {
+            answerArray[j] = guess;
+            appearances++;
+          }
         }
+        return appearances;
+      }
+      // Antwort mit Alert anzeigen und dem Spieler gratulieren
+      let showResult = function (answerArray) {
+        showProgress(answerArray);
+        alert(
+          "Gut gemacht! Die Antwort lautet " +
+            answerArray.join("").toUpperCase()
+        );
+      };
+      let word = pickWord();
+      let answerArray = setupAnswerArray(word);
+      let leftLetters = word.length;
 
-        if(word === answerArray.join("")){
-            alert("Gut gemacht! Die Antwort lautet " + answerArray.join("").toUpperCase());
+      while (leftLetters > 0) {
+        // Spielstand mit Alert anzeigen
+        showProgress(answerArray);
+        // Rateversuch mit Prompt anfordern
+        let guess = takeGuess();
+
+        if (guess === null) {
+          break;
+        } else if (guess.length !== 1) {
+          alert("Gib bitte einen einzelnen Buchstaben ein.");
         } else {
-            alert("Schade! Das Wort lautet " + word);
+          let correctGuesses = updateGame(guess, word, answerArray);
+          leftLetters -= correctGuesses;
         }
+      }
+
+      showResult(answerArray);
     </script>
-</body>
+  </body>
 </html>
